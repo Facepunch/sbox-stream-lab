@@ -1,0 +1,21 @@
+
+pointerevents
+{
+	pointer-events: visible;
+	position: absolute;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	top: 0;
+	border: 0px solid #b6ff0000;
+	transition: all 0.1s ease;
+}
+
+.driving 
+{
+	pointerevents
+	{
+		pointer-events: none;
+		border: 15px solid #b6ff00aa;
+	}
+}

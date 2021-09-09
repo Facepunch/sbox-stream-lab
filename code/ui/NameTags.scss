@@ -1,0 +1,30 @@
+﻿nametags
+{
+	position: absolute;
+	top: 0px;
+	right: 0px;
+	left: 0px;
+	bottom: 0px;
+
+	nametag 
+	{
+		font-family: Poppins;
+		position: absolute;
+		font-weight: 500;
+		color: white;
+		font-size: 30px;
+		text-shadow: 2px 2px 1px black;
+		align-items: center;
+		justify-content: center;
+		flex-direction: row-reverse;
+
+		image
+		{
+			width: 40px;
+			height: 40px;
+			margin-right: 10px;
+			border-radius: 5px;
+			box-shadow: 2px 2px 5px black;
+		}
+	}
+}
