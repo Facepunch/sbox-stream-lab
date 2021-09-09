@@ -18,13 +18,13 @@ namespace TwitchLab
 		}
 
 		[Event.Stream.Join]
-		public void OnStreamJoinCommand( string user )
+		public static void OnStreamJoinCommand( string user )
 		{
 			Log.Info( $"{user} joined" );
 		}
 
 		[Event.Stream.Leave]
-		public void OnStreamLeaveCommand( string user )
+		public static void OnStreamLeaveCommand( string user )
 		{
 			Log.Info( $"{user} left" );
 		}

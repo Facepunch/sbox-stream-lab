@@ -116,8 +116,8 @@ namespace TwitchLab
 		public static void MoveToSpawnpoint( Entity pawn )
 		{
 			var spawnpoint = All.OfType<SpawnPoint>()
-								.OrderBy( x => Guid.NewGuid() )
-								.FirstOrDefault();
+				.OrderBy( x => Guid.NewGuid() )
+				.FirstOrDefault();
 
 			if ( spawnpoint == null )
 			{
