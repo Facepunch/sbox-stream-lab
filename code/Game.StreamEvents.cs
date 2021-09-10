@@ -9,6 +9,8 @@ namespace TwitchLab
 		public static void OnStreamConnected()
 		{
 			Log.Info( $"Connected to stream" );
+
+			StreamClient.JoinChannel( StreamClient.Username );
 		}
 
 		[Event.Stream.Message]

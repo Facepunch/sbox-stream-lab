@@ -8,12 +8,11 @@ namespace TwitchLab
 {
 	public partial class Game : GameBase
 	{
-		public static Game Current { get; protected set; }
-		public static Client LocalClient { get; protected set; }
-
+		public static Game Current { get; private set; }
+		public static Client LocalClient { get; private set; }
 		public Hud Hud { get; private set; }
 
-		readonly Dictionary<string, Player> Players = new();
+		private readonly Dictionary<string, Player> Players = new();
 
 		public Game()
 		{
@@ -24,6 +23,11 @@ namespace TwitchLab
 			{
 				Hud = new Hud();
 				Local.Hud = Hud;
+			}
+
+			if ( IsServer )
+			{
+				StreamClient.Connect( StreamService.Twitch );
 			}
 		}
 
@@ -46,18 +50,6 @@ namespace TwitchLab
 
 			Hud?.Delete();
 			Hud = null;
-		}
-
-		public override void Spawn()
-		{
-			base.Spawn();
-
-			StreamClient.Connect( StreamService.Twitch );
-		}
-
-		public override void ClientSpawn()
-		{
-			base.ClientSpawn();
 		}
 
 		public override void ClientJoined( Client cl )
