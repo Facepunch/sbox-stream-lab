@@ -69,13 +69,23 @@ namespace TwitchLab
 			if ( !Players.TryGetValue( user, out var player ) )
 				return;
 
-			player.ApplyAbsoluteImpulse( Vector3.Up * 500 );
+			player.ApplyAbsoluteImpulse( Vector3.Up * (player.PhysicsGroup.Mass * 40.0f) );
+		}
+
+		[Event.Stream.Command( "reset" )]
+		public void OnStreamResetCommand( string user )
+		{
+			if ( !Players.TryGetValue( user, out var player ) )
+				return;
+
+			MoveToSpawnpoint( player );
 		}
 
 		[Event.Stream.Command( "w" )] public void OnStreamForwardCommand( string user ) => MovePlayer( user, Vector3.Forward );
 		[Event.Stream.Command( "a" )] public void OnStreamLeftCommand( string user ) => MovePlayer( user, Vector3.Left );
 		[Event.Stream.Command( "s" )] public void OnStreamBackwardCommand( string user ) => MovePlayer( user, Vector3.Backward );
 		[Event.Stream.Command( "d" )] public void OnStreamRightCommand( string user ) => MovePlayer( user, Vector3.Right );
+		[Event.Stream.Command( "wjump" )] public void OnStreamWJumpCommand( string user ) => MovePlayer( user, (Vector3.Forward + Vector3.Up) );
 
 		private void MovePlayer( string user, Vector3 direction )
 		{
@@ -83,7 +93,7 @@ namespace TwitchLab
 				return;
 
 			var rotation = Rotation.From( LocalClient.Pawn.Rotation.Angles().WithPitch( 0 ) );
-			player.ApplyAbsoluteImpulse( rotation * direction * ( player.PhysicsGroup.Mass * 20.0f ) );
+			player.ApplyAbsoluteImpulse( rotation * direction * ( player.PhysicsGroup.Mass * 30.0f ) );
 		}
 	}
 }

@@ -45,5 +45,11 @@ namespace TwitchLab
 		{
 			StreamClient.LeaveChannel( channel );
 		}
+
+		[AdminCmd( "stream_resetplayers" )]
+		public static void StreamResetPlayersCommand()
+		{
+			Current.ResetPlayers();
+		}
 	}
 }

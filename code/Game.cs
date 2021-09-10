@@ -117,7 +117,16 @@ namespace TwitchLab
 				return;
 			}
 
+			pawn.ResetInterpolation();
 			pawn.Transform = spawnpoint.Transform;
+		}
+
+		public void ResetPlayers()
+		{
+			foreach ( var player in Players.Values )
+			{
+				MoveToSpawnpoint( player );
+			}
 		}
 
 		public override void PostLevelLoaded()
