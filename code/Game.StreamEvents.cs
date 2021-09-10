@@ -83,7 +83,7 @@ namespace TwitchLab
 				return;
 
 			var rotation = Rotation.From( LocalClient.Pawn.Rotation.Angles().WithPitch( 0 ) );
-			player.ApplyAbsoluteImpulse( rotation * direction * 500.0f );
+			player.ApplyAbsoluteImpulse( rotation * direction * ( player.PhysicsGroup.Mass * 20.0f ) );
 		}
 	}
 }

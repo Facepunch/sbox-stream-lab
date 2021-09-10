@@ -1,4 +1,5 @@
 ﻿using Sandbox;
+using System.Runtime.Serialization;
 
 namespace TwitchLab
 {
@@ -37,6 +38,20 @@ namespace TwitchLab
 		public void SetupPhysics()
 		{
 			SetupPhysicsFromModel( PhysicsMotionType.Dynamic );
+		}
+
+		public override void StartTouch( Entity other )
+		{
+			if ( !IsServer ) return;
+
+			if ( other is Pickup pickup )
+			{
+				Scale = (Scale + 0.1f).Clamp( 1.0f, 5.0f );
+
+				pickup.Delete();
+
+				return;
+			}
 		}
 	}
 }

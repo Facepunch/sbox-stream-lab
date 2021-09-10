@@ -44,6 +44,21 @@ namespace TwitchLab
 			Position += Velocity * Time.Delta;
 
 			EyePos = Position;
+
+			if ( IsServer && Input.Pressed( InputButton.Attack1 ) )
+			{
+				var tr = Trace.Ray( Input.Cursor.Origin, Input.Cursor.Origin + Input.Cursor.Direction * 5000 )
+					.WorldOnly()
+					.Run();
+
+				if ( tr.Hit )
+				{
+					new Pickup
+					{
+						Position = tr.EndPos
+					};
+				}
+			}
 		}
 	}
 }
