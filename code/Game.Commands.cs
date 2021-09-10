@@ -33,5 +33,17 @@ namespace TwitchLab
 		{
 			StreamClient.TimeoutUser( username, duration, reason );
 		}
+
+		[AdminCmd( "stream_joinchannel" )]
+		public static void StreamJoinChannelCommand( string channel )
+		{
+			StreamClient.JoinChannel( channel );
+		}
+
+		[AdminCmd( "stream_leavechannel" )]
+		public static void StreamLeaveChannelCommand( string channel )
+		{
+			StreamClient.LeaveChannel( channel );
+		}
 	}
 }
