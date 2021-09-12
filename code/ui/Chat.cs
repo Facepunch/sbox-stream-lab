@@ -7,7 +7,8 @@ namespace TwitchLab
 	{
 		public Panel Canvas { get; protected set; }
 
-		readonly Queue<ChatEntry> Entries = new();
+		private readonly Queue<ChatEntry> Entries = new();
+		private ChatEntry LastEntry = null;
 
 		public Chat()
 		{
@@ -18,21 +19,32 @@ namespace TwitchLab
 
 		public void AddEntry( string name, string message, string avatar, string color )
 		{
-			var e = Canvas.AddChild<ChatEntry>();
-			e.MessageLabel.Text = message;
-			e.NameLabel.Text = name;
-			e.NameLabel.Style.FontColor = Color.Parse( color );
-			e.BadgeImage.SetTexture( avatar );
-
-			e.SetClass( "noname", string.IsNullOrEmpty( name ) );
-			e.SetClass( "noavatar", string.IsNullOrEmpty( avatar ) );
-
 			if ( Entries.Count >= 20 )
 			{
 				Entries.Dequeue()?.Delete( true );
 			}
 
-			Entries.Enqueue( e );
+			ChatEntry entry = LastEntry;
+			if ( entry == null || entry.NameLabel.Text != name )
+			{
+				entry = Canvas.AddChild<ChatEntry>();
+				entry.MessageLabel.Text = message;
+
+				Entries.Enqueue( entry );
+				LastEntry = entry;
+			}
+			else
+			{
+				entry.MessageLabel.Text += "\n";
+				entry.MessageLabel.Text += message;
+			}
+
+			entry.NameLabel.Text = name;
+			entry.NameLabel.Style.FontColor = Color.Parse( color );
+			entry.BadgeImage.SetTexture( avatar );
+
+			entry.SetClass( "noname", string.IsNullOrEmpty( name ) );
+			entry.SetClass( "noavatar", string.IsNullOrEmpty( avatar ) );
 		}
 	}
 }
