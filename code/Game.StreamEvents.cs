@@ -34,9 +34,15 @@ namespace TwitchLab
 		}
 
 		[Event.Stream.Leave]
-		public static void OnStreamLeaveCommand( string user )
+		public void OnStreamLeaveCommand( string user )
 		{
 			Log.Info( $"{user} left" );
+
+			if ( Players.TryGetValue( user, out var player ) )
+			{
+				Players.Remove( user );
+				player?.Delete();
+			}
 		}
 
 		[Event.Stream.Command( "play" )]

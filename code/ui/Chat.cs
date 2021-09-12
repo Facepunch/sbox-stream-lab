@@ -29,7 +29,7 @@ namespace TwitchLab
 
 			if ( Entries.Count >= 20 )
 			{
-				Entries.Dequeue()?.Delete( true ) ;
+				Entries.Dequeue()?.Delete( true );
 			}
 
 			Entries.Enqueue( e );

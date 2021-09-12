@@ -24,10 +24,7 @@
     }
 
     .chat_canvas {
-        background-color: rgba(black, 0.1);
-
         &:hover {
-            background-color: rgba(black, 0.5);
             pointer-events: all;
         }
 
