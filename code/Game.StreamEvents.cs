@@ -17,6 +17,14 @@ namespace TwitchLab
 		public static void OnStreamMessage( ChatMessage message )
 		{
 			Log.Info( $"{message.DisplayName}: {message.Message} {message.Color}" );
+
+			Current.OnChatMessage( message.DisplayName, message.Message, message.Color );
+		}
+
+		[ClientRpc]
+		void OnChatMessage( string name, string message, string color )
+		{
+			Hud.AddChatEntry( name, message, color );
 		}
 
 		[Event.Stream.Join]
@@ -85,7 +93,6 @@ namespace TwitchLab
 		[Event.Stream.Command( "a" )] public void OnStreamLeftCommand( string user ) => MovePlayer( user, Vector3.Left );
 		[Event.Stream.Command( "s" )] public void OnStreamBackwardCommand( string user ) => MovePlayer( user, Vector3.Backward );
 		[Event.Stream.Command( "d" )] public void OnStreamRightCommand( string user ) => MovePlayer( user, Vector3.Right );
-		[Event.Stream.Command( "wjump" )] public void OnStreamWJumpCommand( string user ) => MovePlayer( user, (Vector3.Forward + Vector3.Up) );
 
 		private void MovePlayer( string user, Vector3 direction )
 		{

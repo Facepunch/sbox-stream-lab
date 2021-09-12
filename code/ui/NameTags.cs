@@ -23,7 +23,7 @@ namespace TwitchLab
 			if ( !player.IsValid() )
 				return;
 
-			var labelPos = player.WorldSpaceBounds.Center + Vector3.Up * 50;
+			var labelPos = player.WorldSpaceBounds.Center + Vector3.Up * 10;
 			var lookDir = (labelPos - CurrentView.Position).Normal;
 
 			if ( CurrentView.Rotation.Forward.Dot( lookDir ) < 0.5f )

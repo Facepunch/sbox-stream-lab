@@ -5,8 +5,8 @@ namespace TwitchLab
 {
 	public partial class Pickup : ModelEntity
 	{
-		private ModelEntity Visual;
-		private float timeOffset;
+		private ModelEntity VisualEntity;
+		private float TimeOffset;
 
 		public Pickup()
 		{
@@ -18,26 +18,27 @@ namespace TwitchLab
 		{
 			base.ClientSpawn();
 
-			Visual = new ModelEntity();
-			Visual.SetParent( this );
-			Visual.SetModel( "models/citizen_props/coin01.vmdl" );
-			Visual.LocalPosition = Vector3.Zero;
-			Visual.LocalRotation = Rotation.FromPitch( 90.0f );
+			VisualEntity = new ModelEntity();
+			VisualEntity.SetParent( this );
+			VisualEntity.SetModel( "models/citizen_props/coin01.vmdl" );
+			VisualEntity.LocalPosition = Vector3.Zero;
+			VisualEntity.LocalRotation = Rotation.FromPitch( 90.0f );
+			VisualEntity.EnableAllCollisions = false;
 
-			timeOffset = Rand.Float( 0.0f, 5.0f );
+			TimeOffset = Rand.Float( 0.0f, 5.0f );
 		}
 
 		[Event.Frame]
 		protected void OnFrame()
 		{
-			if ( Visual == null )
+			if ( VisualEntity == null )
 				return;
 
-			var time = (Time.Now + timeOffset) % (MathF.PI * 2.0f);
+			var time = (Time.Now + TimeOffset) % (MathF.PI * 2.0f);
 			var delta = (MathF.Sin( time * 5.0f ) + 1.0f) * 0.5f;
 
-			Visual.LocalPosition = Vector3.Up * 25.0f * delta;
-			Visual.LocalRotation = Rotation.From( 90.0f, time.RadianToDegree() * 5.0f, 0.0f );
+			VisualEntity.LocalPosition = Vector3.Up * 25.0f * delta;
+			VisualEntity.LocalRotation = Rotation.From( 90.0f, time.RadianToDegree() * 5.0f, 0.0f );
 		}
 	}
 }
