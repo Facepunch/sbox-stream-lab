@@ -7,13 +7,19 @@ namespace TwitchLab
 	public class NameTag : Panel
 	{
 		private readonly Player player;
+		private Image image;
 
 		public NameTag( Player player )
 		{
 			this.player = player;
 
 			Add.Label( player.DisplayName );
-			Add.Image( "ui/twitch.jpg" );
+			image = Add.Image( "ui/twitch.jpg" );
+		}
+
+		public void SetImageTexture( string texture )
+		{
+			image.SetTexture( texture );
 		}
 
 		public override void Tick()

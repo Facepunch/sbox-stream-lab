@@ -55,6 +55,8 @@ namespace TwitchLab
 					DisplayName = user,
 				};
 
+				player.RequestAvatar();
+
 				MoveToSpawnpoint( player );
 
 				player.SetupPhysics();

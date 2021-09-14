@@ -1,5 +1,5 @@
 ﻿using Sandbox;
-using System.Runtime.Serialization;
+using Sandbox.Streaming;
 
 namespace TwitchLab
 {
@@ -11,6 +11,24 @@ namespace TwitchLab
 		public Player()
 		{
 			Tags.Add( "player" );
+		}
+
+		public async void RequestAvatar()
+		{
+			if ( !IsServer )
+				return;
+
+			var user = await StreamClient.TwitchAPI.GetUser( DisplayName.ToLower() );
+			SetAvatar( user.ProfileImageUrl );
+		}
+
+		[ClientRpc]
+		private void SetAvatar( string image )
+		{
+			if ( NameTag == null )
+				return;
+
+			NameTag.SetImageTexture( image );
 		}
 
 		public override void Spawn()
