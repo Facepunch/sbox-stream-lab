@@ -71,11 +71,7 @@ namespace TwitchLab
 			if ( Players.TryGetValue( user, out var player ) )
 			{	
 				Players.Remove( user );
-
-				if ( player != null )
-				{
-					player.Delete();
-				}
+				player?.Delete();
 			}
 		}
 

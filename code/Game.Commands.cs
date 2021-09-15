@@ -51,5 +51,29 @@ namespace TwitchLab
 		{
 			Current.ResetPlayers();
 		}
+
+		[AdminCmd( "stream_channel_game" )]
+		public static void StreamChannelGameCommand( string gameId )
+		{
+			StreamClient.TwitchAPI.SetChannelGame( StreamClient.UserId, gameId );
+		}
+
+		[AdminCmd( "stream_channel_language" )]
+		public static void StreamChannelLanguageCommand( string languageId )
+		{
+			StreamClient.TwitchAPI.SetChannelLanguage( StreamClient.UserId, languageId );
+		}
+
+		[AdminCmd( "stream_channel_title" )]
+		public static void StreamChannelTitleCommand( string title )
+		{
+			StreamClient.TwitchAPI.SetChannelTitle( StreamClient.UserId, title );
+		}
+
+		[AdminCmd( "stream_channel_delay" )]
+		public static void StreamChannelDelayCommand( int delay )
+		{
+			StreamClient.TwitchAPI.SetChannelDelay( StreamClient.UserId, delay );
+		}
 	}
 }
