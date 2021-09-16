@@ -75,11 +75,5 @@ namespace TwitchLab
 		{
 			Stream.SetChannelDelay( delay );
 		}
-
-		[AdminCmd( "stream_createpoll" )]
-		public static void StreamCreatePollCommand()
-		{
-			//Stream.TwitchAPI.CreatePoll( Stream.UserId, "test", 100, new[] { "yes", "no" } );
-		}
 	}
 }

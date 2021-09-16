@@ -7,24 +7,36 @@ namespace TwitchLab
 		[Event.Stream.Connected]
 		public static void OnStreamConnected()
 		{
+			if ( !Host.IsServer )
+				return;
+
 			Stream.JoinChannel( Stream.Username );
 		}
 
 		[Event.Stream.Message]
 		public static void OnStreamMessage( StreamChatMessage message )
 		{
+			if ( !Host.IsServer )
+				return;
+
 			Current.OnChatMessage( message.DisplayName, message.Message, message.Color );
 		}
 
 		[Event.Stream.Join]
 		public static void OnStreamJoinEvent( string user )
 		{
+			if ( !Host.IsServer )
+				return;
+
 			Log.Info( $"{user} joined" );
 		}
 
 		[Event.Stream.Leave]
 		public static void OnStreamLeaveEvent( string user )
 		{
+			if ( !Host.IsServer )
+				return;
+
 			Log.Info( $"{user} left" );
 
 			Current.RemovePlayer( user );
@@ -33,24 +45,36 @@ namespace TwitchLab
 		[Stream.OnChat( "!play" )]
 		public static void OnStreamPlayCommand()
 		{
+			if ( !Host.IsServer )
+				return;
+
 			Current.AddPlayer( Stream.OnChat.User );
 		}
 
 		[Stream.OnChat( "!quit" )]
 		public static void OnStreamQuitCommand()
 		{
+			if ( !Host.IsServer )
+				return;
+
 			Current.RemovePlayer( Stream.OnChat.User );
 		}
 
 		[Stream.OnChat( "jump" )]
 		public static void OnStreamJumpCommand()
 		{
+			if ( !Host.IsServer )
+				return;
+
 			Current.JumpPlayer( Stream.OnChat.User );
 		}
 
 		[Stream.OnChat( "reset" )]
 		public static void OnStreamResetCommand()
 		{
+			if ( !Host.IsServer )
+				return;
+
 			Current.ResetPlayer( Stream.OnChat.User );
 		}
 
@@ -105,6 +129,9 @@ namespace TwitchLab
 
 		private void MovePlayer( string user, Vector3 direction )
 		{
+			if ( !Host.IsServer )
+				return;
+
 			if ( !Players.TryGetValue( user, out var player ) )
 				return;
 
