@@ -55,31 +55,31 @@ namespace TwitchLab
 		[AdminCmd( "stream_channel_game" )]
 		public static void StreamChannelGameCommand( string gameId )
 		{
-			Stream.TwitchAPI.SetChannelGame( Stream.UserId, gameId );
+			Stream.SetChannelGame( gameId );
 		}
 
 		[AdminCmd( "stream_channel_language" )]
 		public static void StreamChannelLanguageCommand( string languageId )
 		{
-			Stream.TwitchAPI.SetChannelLanguage( Stream.UserId, languageId );
+			Stream.SetChannelLanguage( languageId );
 		}
 
 		[AdminCmd( "stream_channel_title" )]
 		public static void StreamChannelTitleCommand( string title )
 		{
-			Stream.TwitchAPI.SetChannelTitle( Stream.UserId, title );
+			Stream.SetChannelTitle( title );
 		}
 
 		[AdminCmd( "stream_channel_delay" )]
 		public static void StreamChannelDelayCommand( int delay )
 		{
-			Stream.TwitchAPI.SetChannelDelay( Stream.UserId, delay );
+			Stream.SetChannelDelay( delay );
 		}
 
 		[AdminCmd( "stream_createpoll" )]
 		public static void StreamCreatePollCommand()
 		{
-			Stream.TwitchAPI.CreatePoll( Stream.UserId, "test", 100, new[] { "yes", "no" } );
+			//Stream.TwitchAPI.CreatePoll( Stream.UserId, "test", 100, new[] { "yes", "no" } );
 		}
 	}
 }

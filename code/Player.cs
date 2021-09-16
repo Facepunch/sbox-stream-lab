@@ -12,13 +12,13 @@ namespace TwitchLab
 			Tags.Add( "player" );
 		}
 
-		public async void RequestAvatar()
+		public void RequestAvatar()
 		{
 			if ( !IsServer )
 				return;
 
-			var user = await Stream.TwitchAPI.GetUser( DisplayName.ToLower() );
-			SetAvatar( user.ProfileImageUrl );
+			//var user = await Stream.TwitchAPI.GetUser( DisplayName.ToLower() );
+			//SetAvatar( user.ProfileImageUrl );
 		}
 
 		[ClientRpc]
