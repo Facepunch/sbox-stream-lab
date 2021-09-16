@@ -1,4 +1,4 @@
-﻿using Sandbox.Streaming;
+﻿using Sandbox;
 
 namespace TwitchLab
 {
@@ -7,43 +7,43 @@ namespace TwitchLab
 		[AdminCmd( "stream_clear" )]
 		public static void StreamClearCommand()
 		{
-			StreamClient.ClearChat();
+			Stream.ClearChat();
 		}
 
 		[AdminCmd( "stream_say" )]
 		public static void StreamSayCommand( string message )
 		{
-			StreamClient.SendMessage( message );
+			Stream.SendMessage( message );
 		}
 
 		[AdminCmd( "stream_ban" )]
 		public static void StreamBanCommand( string username, string reason = null )
 		{
-			StreamClient.BanUser( username, reason );
+			Stream.BanUser( username, reason );
 		}
 
 		[AdminCmd( "stream_unban" )]
 		public static void StreamUnbanCommand( string username )
 		{
-			StreamClient.UnbanUser( username );
+			Stream.UnbanUser( username );
 		}
 
 		[AdminCmd( "stream_timeout" )]
 		public static void StreamTimeoutCommand( string username, int duration, string reason = null )
 		{
-			StreamClient.TimeoutUser( username, duration, reason );
+			Stream.TimeoutUser( username, duration, reason );
 		}
 
 		[AdminCmd( "stream_joinchannel" )]
 		public static void StreamJoinChannelCommand( string channel )
 		{
-			StreamClient.JoinChannel( channel );
+			Stream.JoinChannel( channel );
 		}
 
 		[AdminCmd( "stream_leavechannel" )]
 		public static void StreamLeaveChannelCommand( string channel )
 		{
-			StreamClient.LeaveChannel( channel );
+			Stream.LeaveChannel( channel );
 		}
 
 		[AdminCmd( "stream_resetplayers" )]
@@ -55,25 +55,31 @@ namespace TwitchLab
 		[AdminCmd( "stream_channel_game" )]
 		public static void StreamChannelGameCommand( string gameId )
 		{
-			StreamClient.TwitchAPI.SetChannelGame( StreamClient.UserId, gameId );
+			Stream.TwitchAPI.SetChannelGame( Stream.UserId, gameId );
 		}
 
 		[AdminCmd( "stream_channel_language" )]
 		public static void StreamChannelLanguageCommand( string languageId )
 		{
-			StreamClient.TwitchAPI.SetChannelLanguage( StreamClient.UserId, languageId );
+			Stream.TwitchAPI.SetChannelLanguage( Stream.UserId, languageId );
 		}
 
 		[AdminCmd( "stream_channel_title" )]
 		public static void StreamChannelTitleCommand( string title )
 		{
-			StreamClient.TwitchAPI.SetChannelTitle( StreamClient.UserId, title );
+			Stream.TwitchAPI.SetChannelTitle( Stream.UserId, title );
 		}
 
 		[AdminCmd( "stream_channel_delay" )]
 		public static void StreamChannelDelayCommand( int delay )
 		{
-			StreamClient.TwitchAPI.SetChannelDelay( StreamClient.UserId, delay );
+			Stream.TwitchAPI.SetChannelDelay( Stream.UserId, delay );
+		}
+
+		[AdminCmd( "stream_createpoll" )]
+		public static void StreamCreatePollCommand()
+		{
+			Stream.TwitchAPI.CreatePoll( Stream.UserId, "test", 100, new[] { "yes", "no" } );
 		}
 	}
 }

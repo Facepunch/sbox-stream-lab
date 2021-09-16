@@ -1,23 +1,24 @@
 ﻿using Sandbox;
-using Sandbox.Streaming;
 
 namespace TwitchLab
 {
 	public partial class Game
 	{
+		[Stream.OnChat( "north" )]
+		public static void OnNorth()
+		{
+			Log.Info( "NORTH!" );
+		}
+
 		[Event.Stream.Connected]
 		public static void OnStreamConnected()
 		{
-			Log.Info( $"Connected to stream" );
-
-			StreamClient.JoinChannel( StreamClient.Username );
+			Stream.JoinChannel( Stream.Username );
 		}
 
 		[Event.Stream.Message]
-		public static void OnStreamMessage( ChatMessage message )
+		public static void OnStreamMessage( StreamChatMessage message )
 		{
-			Log.Info( $"{message.DisplayName}: {message.Message} {message.Color}" );
-
 			Current.OnChatMessage( message.DisplayName, message.Message, message.Color );
 		}
 
@@ -28,25 +29,49 @@ namespace TwitchLab
 		}
 
 		[Event.Stream.Join]
-		public static void OnStreamJoinCommand( string user )
+		public static void OnStreamJoinEvent()
 		{
-			Log.Info( $"{user} joined" );
+			Log.Info( $"{Stream.OnChat.User} joined" );
 		}
 
 		[Event.Stream.Leave]
-		public void OnStreamLeaveCommand( string user )
+		public static void OnStreamLeaveEvent()
 		{
-			Log.Info( $"{user} left" );
+			Log.Info( $"{Stream.OnChat.User} left" );
 
-			if ( Players.TryGetValue( user, out var player ) )
-			{
-				Players.Remove( user );
-				player?.Delete();
-			}
+			Current.RemovePlayer( Stream.OnChat.User );
 		}
 
-		[Event.Stream.Command( "play" )]
-		public void OnStreamPlayCommand( string user )
+		[Stream.OnChat( "!play" )]
+		public static void OnStreamPlayCommand()
+		{
+			Current.AddPlayer( Stream.OnChat.User );
+		}
+
+		[Stream.OnChat( "!quit" )]
+		public static void OnStreamQuitCommand()
+		{
+			Current.RemovePlayer( Stream.OnChat.User );
+		}
+
+		[Stream.OnChat( "jump" )]
+		public static void OnStreamJumpCommand()
+		{
+			Current.JumpPlayer( Stream.OnChat.User );
+		}
+
+		[Stream.OnChat( "reset" )]
+		public static void OnStreamResetCommand()
+		{
+			Current.ResetPlayer( Stream.OnChat.User );
+		}
+
+		[Stream.OnChat( "w" )] public static void OnStreamForwardCommand() => Current.MovePlayer( Stream.OnChat.User, Vector3.Forward );
+		[Stream.OnChat( "a" )] public static void OnStreamLeftCommand() => Current.MovePlayer( Stream.OnChat.User, Vector3.Left );
+		[Stream.OnChat( "s" )] public static void OnStreamBackwardCommand() => Current.MovePlayer( Stream.OnChat.User, Vector3.Backward );
+		[Stream.OnChat( "d" )] public static void OnStreamRightCommand() => Current.MovePlayer( Stream.OnChat.User, Vector3.Right );
+
+		private void AddPlayer( string user )
 		{
 			if ( !Players.ContainsKey( user ) )
 			{
@@ -65,27 +90,16 @@ namespace TwitchLab
 			}
 		}
 
-		[Event.Stream.Command( "quit" )]
-		public void OnStreamQuitCommand( string user )
+		private void RemovePlayer( string user )
 		{
 			if ( Players.TryGetValue( user, out var player ) )
-			{	
+			{
 				Players.Remove( user );
 				player?.Delete();
 			}
 		}
 
-		[Event.Stream.Command( "jump" )]
-		public void OnStreamJumpCommand( string user )
-		{
-			if ( !Players.TryGetValue( user, out var player ) )
-				return;
-
-			player.ApplyAbsoluteImpulse( Vector3.Up * (player.PhysicsGroup.Mass * 40.0f) );
-		}
-
-		[Event.Stream.Command( "reset" )]
-		public void OnStreamResetCommand( string user )
+		private void ResetPlayer( string user )
 		{
 			if ( !Players.TryGetValue( user, out var player ) )
 				return;
@@ -93,10 +107,13 @@ namespace TwitchLab
 			MoveToSpawnpoint( player );
 		}
 
-		[Event.Stream.Command( "w" )] public void OnStreamForwardCommand( string user ) => MovePlayer( user, Vector3.Forward );
-		[Event.Stream.Command( "a" )] public void OnStreamLeftCommand( string user ) => MovePlayer( user, Vector3.Left );
-		[Event.Stream.Command( "s" )] public void OnStreamBackwardCommand( string user ) => MovePlayer( user, Vector3.Backward );
-		[Event.Stream.Command( "d" )] public void OnStreamRightCommand( string user ) => MovePlayer( user, Vector3.Right );
+		private void JumpPlayer( string user )
+		{
+			if ( !Players.TryGetValue( user, out var player ) )
+				return;
+
+			player.ApplyAbsoluteImpulse( Vector3.Up * (player.PhysicsGroup.Mass * 40.0f) );
+		}
 
 		private void MovePlayer( string user, Vector3 direction )
 		{

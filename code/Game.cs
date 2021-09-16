@@ -1,5 +1,4 @@
 ﻿using Sandbox;
-using Sandbox.Streaming;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -27,7 +26,7 @@ namespace TwitchLab
 
 			if ( IsServer )
 			{
-				StreamClient.Connect( StreamService.Twitch );
+				Stream.Connect( StreamService.Twitch );
 			}
 		}
 

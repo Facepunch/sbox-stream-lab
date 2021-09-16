@@ -1,5 +1,4 @@
 ﻿using Sandbox;
-using Sandbox.Streaming;
 
 namespace TwitchLab
 {
@@ -18,7 +17,7 @@ namespace TwitchLab
 			if ( !IsServer )
 				return;
 
-			var user = await StreamClient.TwitchAPI.GetUser( DisplayName.ToLower() );
+			var user = await Stream.TwitchAPI.GetUser( DisplayName.ToLower() );
 			SetAvatar( user.ProfileImageUrl );
 		}
 
