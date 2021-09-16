@@ -4,12 +4,6 @@ namespace TwitchLab
 {
 	public partial class Game
 	{
-		[Stream.OnChat( "north" )]
-		public static void OnNorth()
-		{
-			Log.Info( "NORTH!" );
-		}
-
 		[Event.Stream.Connected]
 		public static void OnStreamConnected()
 		{
@@ -22,24 +16,18 @@ namespace TwitchLab
 			Current.OnChatMessage( message.DisplayName, message.Message, message.Color );
 		}
 
-		[ClientRpc]
-		void OnChatMessage( string name, string message, string color )
-		{
-			Hud.AddChatEntry( name, message, color );
-		}
-
 		[Event.Stream.Join]
-		public static void OnStreamJoinEvent()
+		public static void OnStreamJoinEvent( string user )
 		{
-			Log.Info( $"{Stream.OnChat.User} joined" );
+			Log.Info( $"{user} joined" );
 		}
 
 		[Event.Stream.Leave]
-		public static void OnStreamLeaveEvent()
+		public static void OnStreamLeaveEvent( string user )
 		{
-			Log.Info( $"{Stream.OnChat.User} left" );
+			Log.Info( $"{user} left" );
 
-			Current.RemovePlayer( Stream.OnChat.User );
+			Current.RemovePlayer( user );
 		}
 
 		[Stream.OnChat( "!play" )]

@@ -128,6 +128,12 @@ namespace TwitchLab
 			}
 		}
 
+		[ClientRpc]
+		void OnChatMessage( string name, string message, string color )
+		{
+			Hud.AddChatEntry( name, message, color );
+		}
+
 		public override void PostLevelLoaded()
 		{
 		}
