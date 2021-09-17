@@ -23,6 +23,11 @@ namespace TwitchLab
 				Hud = new Hud();
 				Local.Hud = Hud;
 			}
+
+			if ( IsServer )
+			{
+				Stream.JoinChannel( Stream.Username );
+			}
 		}
 
 		public override void Shutdown()

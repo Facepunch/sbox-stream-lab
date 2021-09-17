@@ -9,28 +9,19 @@ namespace TwitchLab
 		/// <summary>
 		/// Event called when a chat command comes in
 		/// </summary>
-		public class OnChat : LibraryMethod
+		public class OnChatCommand : LibraryMethod
 		{
 			public string TargetName { get; set; }
 
 			public static string User { get; internal set; }
 
-			public OnChat( string targetName )
+			public OnChatCommand( string targetName )
 			{
 				TargetName = targetName;
 			}
 		}
 
-		[Stream.OnConnected]
-		public static void OnStreamConnected()
-		{
-			if ( !Host.IsServer )
-				return;
-
-			Stream.JoinChannel( Stream.Username );
-		}
-
-		[Stream.OnMessage]
+		[Event.Stream.ChatMessage]
 		public static void OnStreamMessage( StreamChatMessage message )
 		{
 			if ( !Host.IsServer )
@@ -39,19 +30,19 @@ namespace TwitchLab
 			var splits = message.Message.Split( ' ', StringSplitOptions.RemoveEmptyEntries );
 			if ( splits.Length > 0 )
 			{
-				var attribute = Library.GetAttributes<OnChat>()
+				var attribute = Library.GetAttributes<OnChatCommand>()
 					.Where( x => string.Equals( x.TargetName, splits[0], StringComparison.OrdinalIgnoreCase ) )
 					.FirstOrDefault();
 
-				OnChat.User = message.Username;
+				OnChatCommand.User = message.Username;
 				attribute?.InvokeStatic();
-				OnChat.User = null;
+				OnChatCommand.User = null;
 			}
 
 			Current.OnChatMessage( message.DisplayName, message.Message, message.Color );
 		}
 
-		[Stream.OnJoin]
+		[Event.Stream.JoinChat]
 		public static void OnStreamJoinEvent( string user )
 		{
 			if ( !Host.IsServer )
@@ -60,7 +51,7 @@ namespace TwitchLab
 			Log.Info( $"{user} joined" );
 		}
 
-		[Stream.OnLeave]
+		[Event.Stream.LeaveChat]
 		public static void OnStreamLeaveEvent( string user )
 		{
 			if ( !Host.IsServer )
@@ -71,46 +62,46 @@ namespace TwitchLab
 			Current.RemovePlayer( user );
 		}
 
-		[OnChat( "!play" )]
+		[OnChatCommand( "!play" )]
 		public static void OnStreamPlayCommand()
 		{
 			if ( !Host.IsServer )
 				return;
 
-			Current.AddPlayer( OnChat.User );
+			Current.AddPlayer( OnChatCommand.User );
 		}
 
-		[OnChat( "!quit" )]
+		[OnChatCommand( "!quit" )]
 		public static void OnStreamQuitCommand()
 		{
 			if ( !Host.IsServer )
 				return;
 
-			Current.RemovePlayer( OnChat.User );
+			Current.RemovePlayer( OnChatCommand.User );
 		}
 
-		[OnChat( "jump" )]
+		[OnChatCommand( "jump" )]
 		public static void OnStreamJumpCommand()
 		{
 			if ( !Host.IsServer )
 				return;
 
-			Current.JumpPlayer( OnChat.User );
+			Current.JumpPlayer( OnChatCommand.User );
 		}
 
-		[OnChat( "reset" )]
+		[OnChatCommand( "reset" )]
 		public static void OnStreamResetCommand()
 		{
 			if ( !Host.IsServer )
 				return;
 
-			Current.ResetPlayer( OnChat.User );
+			Current.ResetPlayer( OnChatCommand.User );
 		}
 
-		[OnChat( "w" )] public static void OnStreamForwardCommand() => Current.MovePlayer( OnChat.User, Vector3.Forward );
-		[OnChat( "a" )] public static void OnStreamLeftCommand() => Current.MovePlayer( OnChat.User, Vector3.Left );
-		[OnChat( "s" )] public static void OnStreamBackwardCommand() => Current.MovePlayer( OnChat.User, Vector3.Backward );
-		[OnChat( "d" )] public static void OnStreamRightCommand() => Current.MovePlayer( OnChat.User, Vector3.Right );
+		[OnChatCommand( "w" )] public static void OnStreamForwardCommand() => Current.MovePlayer( OnChatCommand.User, Vector3.Forward );
+		[OnChatCommand( "a" )] public static void OnStreamLeftCommand() => Current.MovePlayer( OnChatCommand.User, Vector3.Left );
+		[OnChatCommand( "s" )] public static void OnStreamBackwardCommand() => Current.MovePlayer( OnChatCommand.User, Vector3.Backward );
+		[OnChatCommand( "d" )] public static void OnStreamRightCommand() => Current.MovePlayer( OnChatCommand.User, Vector3.Right );
 
 		private void AddPlayer( string user )
 		{
