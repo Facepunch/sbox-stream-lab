@@ -109,5 +109,27 @@ namespace TwitchLab
 				Log.Info( $"FollowedAt: {follow.CreatedAt}" );
 			}
 		}
+
+		[AdminCmd( "stream_game" )]
+		public static async void StreamGameCommand( string gameName )
+		{
+			Log.Info( $"Game: {gameName}" );
+
+			var game = await Stream.GetGame( gameName );
+
+			Log.Info( $"BoxArtUrl: {game.BoxArtUrl}" );
+			Log.Info( $"Id: {game.Id}" );
+			Log.Info( $"Name: {game.Name}" );
+
+			var broadcasts = await Stream.GetBroadcasts( game.Id );
+
+			foreach ( var broadcast in broadcasts )
+			{
+				Log.Info( $"DisplayName: {broadcast.DisplayName}" );
+				Log.Info( $"ViewerCount: {broadcast.ViewerCount}" );
+				Log.Info( $"ThumbnailUrl: {broadcast.ThumbnailUrl}" );
+				Log.Info( $"Title: {broadcast.Title}" );
+			}
+		}
 	}
 }
