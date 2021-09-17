@@ -121,7 +121,7 @@ namespace TwitchLab
 			Log.Info( $"Id: {game.Id}" );
 			Log.Info( $"Name: {game.Name}" );
 
-			var broadcasts = await Stream.GetBroadcasts( game.Id );
+			var broadcasts = await game.Broadcasts;
 
 			foreach ( var broadcast in broadcasts )
 			{
