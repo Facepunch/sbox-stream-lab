@@ -75,5 +75,36 @@ namespace TwitchLab
 		{
 			Stream.SetChannelDelay( delay );
 		}
+
+		[AdminCmd( "stream_followers" )]
+		public static async void StreamFollowersCommand()
+		{
+			Log.Info( "Followers" );
+
+			var follows = await Stream.GetUserFollowers( Stream.UserId );
+			foreach ( var follow in follows )
+			{
+				Log.Info( $"UserId: {follow.UserId}" );
+				Log.Info( $"Username: {follow.Username}" );
+				Log.Info( $"DisplayName: {follow.DisplayName}" );
+				Log.Info( $"FollowedAt: {follow.FollowedAt}" );
+			}
+		}
+
+		[AdminCmd( "stream_following" )]
+		public static async void StreamFollowingCommand()
+		{
+			Log.Info( "Following" );
+
+			var follows = await Stream.GetUserFollowing( Stream.UserId );
+			foreach ( var follow in follows )
+			{
+				Log.Info( $"UserId: {follow.UserId}" );
+				Log.Info( $"Username: {follow.Username}" );
+				Log.Info( $"DisplayName: {follow.DisplayName}" );
+				Log.Info( $"FollowedAt: {follow.FollowedAt}" );
+			}
+		}
+
 	}
 }
