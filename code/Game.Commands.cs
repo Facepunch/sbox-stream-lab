@@ -105,6 +105,5 @@ namespace TwitchLab
 				Log.Info( $"FollowedAt: {follow.FollowedAt}" );
 			}
 		}
-
 	}
 }

@@ -4,7 +4,7 @@ namespace TwitchLab
 {
 	public partial class Game
 	{
-		[Event.Stream.Connected]
+		[Stream.OnConnected]
 		public static void OnStreamConnected()
 		{
 			if ( !Host.IsServer )
@@ -13,7 +13,7 @@ namespace TwitchLab
 			Stream.JoinChannel( Stream.Username );
 		}
 
-		[Event.Stream.Message]
+		[Stream.OnMessage]
 		public static void OnStreamMessage( StreamChatMessage message )
 		{
 			if ( !Host.IsServer )
@@ -22,7 +22,7 @@ namespace TwitchLab
 			Current.OnChatMessage( message.DisplayName, message.Message, message.Color );
 		}
 
-		[Event.Stream.Join]
+		[Stream.OnJoin]
 		public static void OnStreamJoinEvent( string user )
 		{
 			if ( !Host.IsServer )
@@ -31,7 +31,7 @@ namespace TwitchLab
 			Log.Info( $"{user} joined" );
 		}
 
-		[Event.Stream.Leave]
+		[Stream.OnLeave]
 		public static void OnStreamLeaveEvent( string user )
 		{
 			if ( !Host.IsServer )
