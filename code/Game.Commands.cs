@@ -31,7 +31,7 @@ namespace TwitchLab
 		[AdminCmd( "stream_timeout" )]
 		public static void StreamTimeoutCommand( string username, int duration, string reason = null )
 		{
-			Stream.TimeoutUser( username, duration, reason );
+			Stream.BanUser( username, reason, duration );
 		}
 
 		[AdminCmd( "stream_joinchannel" )]
@@ -81,7 +81,9 @@ namespace TwitchLab
 		{
 			Log.Info( "Followers" );
 
-			var follows = await Stream.GetUserFollowers( Stream.UserId );
+			var user = await Stream.GetUser();
+			var follows = await user.Followers;
+
 			foreach ( var follow in follows )
 			{
 				Log.Info( $"UserId: {follow.UserId}" );
@@ -96,7 +98,9 @@ namespace TwitchLab
 		{
 			Log.Info( "Following" );
 
-			var follows = await Stream.GetUserFollowing( Stream.UserId );
+			var user = await Stream.GetUser();
+			var follows = await user.Following;
+
 			foreach ( var follow in follows )
 			{
 				Log.Info( $"UserId: {follow.UserId}" );
