@@ -55,25 +55,25 @@ namespace TwitchLab
 		[AdminCmd( "stream_channel_game" )]
 		public static void StreamChannelGameCommand( string gameId )
 		{
-			Stream.SetChannelGame( gameId );
+			Stream.Game = gameId;
 		}
 
 		[AdminCmd( "stream_channel_language" )]
 		public static void StreamChannelLanguageCommand( string languageId )
 		{
-			Stream.SetChannelLanguage( languageId );
+			Stream.Language = languageId;
 		}
 
 		[AdminCmd( "stream_channel_title" )]
 		public static void StreamChannelTitleCommand( string title )
 		{
-			Stream.SetChannelTitle( title );
+			Stream.Title = title;
 		}
 
 		[AdminCmd( "stream_channel_delay" )]
 		public static void StreamChannelDelayCommand( int delay )
 		{
-			Stream.SetChannelDelay( delay );
+			Stream.Delay = delay;
 		}
 
 		[AdminCmd( "stream_followers" )]
@@ -87,7 +87,7 @@ namespace TwitchLab
 				Log.Info( $"UserId: {follow.UserId}" );
 				Log.Info( $"Username: {follow.Username}" );
 				Log.Info( $"DisplayName: {follow.DisplayName}" );
-				Log.Info( $"FollowedAt: {follow.FollowedAt}" );
+				Log.Info( $"FollowedAt: {follow.CreatedAt}" );
 			}
 		}
 
@@ -102,7 +102,7 @@ namespace TwitchLab
 				Log.Info( $"UserId: {follow.UserId}" );
 				Log.Info( $"Username: {follow.Username}" );
 				Log.Info( $"DisplayName: {follow.DisplayName}" );
-				Log.Info( $"FollowedAt: {follow.FollowedAt}" );
+				Log.Info( $"FollowedAt: {follow.CreatedAt}" );
 			}
 		}
 	}
