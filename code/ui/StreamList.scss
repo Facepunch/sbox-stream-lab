@@ -1,0 +1,41 @@
+﻿streamlist {
+    position: absolute;
+    bottom: 32px;
+    left: 32px;
+    width: 601px;
+    top: 32px;
+    bottom: 32px;
+    font-family: Poppins;
+    background-color: rgba(black, 0.5);
+
+    &:hover {
+        pointer-events: all;
+    }
+}
+
+.streams {
+    display: flex;
+    flex-grow: 1;
+    overflow: scroll;
+    flex-direction: column;
+
+    .cell {
+        padding: 5px;
+
+        .stream {
+            width: 290px;
+            height: 170px;
+            font-size: 14px;
+            background-color: rgba(black, 0.5);
+            color: white;
+        }
+
+        .thumbnail {
+            position: absolute;
+
+            width: 290px;
+            height: 170px;
+            background-repeat: no-repeat;
+        }
+    }
+}
