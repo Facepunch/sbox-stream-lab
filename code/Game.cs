@@ -24,7 +24,7 @@ namespace TwitchLab
 				Local.Hud = Hud;
 			}
 
-			if ( IsServer )
+			if ( IsServer && Stream.IsActive )
 			{
 				Stream.JoinChannel( Stream.Username );
 			}
