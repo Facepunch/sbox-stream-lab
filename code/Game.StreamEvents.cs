@@ -106,6 +106,9 @@ namespace TwitchLab
 		[ServerCmd( "stream_addplayer" )]
 		public static void AddPlayerCommand( string user )
 		{
+			if ( ConsoleSystem.Caller != LocalClient )
+				return;
+
 			Host.AssertServer();
 			Current.AddPlayer( user );
 		}
@@ -132,6 +135,9 @@ namespace TwitchLab
 		[ServerCmd( "stream_removeplayer" )]
 		public static void RemovePlayerCommand( string user )
 		{
+			if ( ConsoleSystem.Caller != LocalClient )
+				return;
+
 			Host.AssertServer();
 			Current.RemovePlayer( user );
 		}
@@ -148,6 +154,9 @@ namespace TwitchLab
 		[ServerCmd( "stream_resetplayer" )]
 		public static void ResetPlayerCommand( string user )
 		{
+			if ( ConsoleSystem.Caller != LocalClient )
+				return;
+
 			Host.AssertServer();
 			Current.ResetPlayer( user );
 		}
@@ -163,6 +172,9 @@ namespace TwitchLab
 		[ServerCmd( "stream_jumpplayer" )]
 		public static void JumpPlayerCommand( string user )
 		{
+			if ( ConsoleSystem.Caller != LocalClient )
+				return;
+
 			Host.AssertServer();
 			Current.JumpPlayer( user );
 		}
@@ -178,6 +190,9 @@ namespace TwitchLab
 		[ServerCmd( "stream_moveplayer" )]
 		public static void MovePlayerCommand( string user, Vector3 direction )
 		{
+			if ( ConsoleSystem.Caller != LocalClient )
+				return;
+
 			Host.AssertServer();
 			Current.MovePlayer( user, direction );
 		}
