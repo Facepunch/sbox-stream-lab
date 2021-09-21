@@ -34,7 +34,7 @@ namespace TwitchLab
 
 		async void AddEntries()
 		{
-			var game = await Stream.GetGame( "rust" );
+			var game = await Streamer.GetGame( "rust" );
 
 			Log.Info( $"BoxArtUrl: {game.BoxArtUrl}" );
 			Log.Info( $"Id: {game.Id}" );

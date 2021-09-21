@@ -4,84 +4,84 @@ namespace TwitchLab
 {
 	public partial class Game
 	{
-		[AdminCmd( "stream_clear" )]
+		[ClientCmd( "stream_clear" )]
 		public static void StreamClearCommand()
 		{
-			Stream.ClearChat();
+			Streamer.ClearChat();
 		}
 
-		[AdminCmd( "stream_say" )]
+		[ClientCmd( "stream_say" )]
 		public static void StreamSayCommand( string message )
 		{
-			Stream.SendMessage( message );
+			Streamer.SendMessage( message );
 		}
 
-		[AdminCmd( "stream_ban" )]
+		[ClientCmd( "stream_ban" )]
 		public static void StreamBanCommand( string username, string reason = null )
 		{
-			Stream.BanUser( username, reason );
+			Streamer.BanUser( username, reason );
 		}
 
-		[AdminCmd( "stream_unban" )]
+		[ClientCmd( "stream_unban" )]
 		public static void StreamUnbanCommand( string username )
 		{
-			Stream.UnbanUser( username );
+			Streamer.UnbanUser( username );
 		}
 
-		[AdminCmd( "stream_timeout" )]
+		[ClientCmd( "stream_timeout" )]
 		public static void StreamTimeoutCommand( string username, int duration, string reason = null )
 		{
-			Stream.BanUser( username, reason, duration );
+			Streamer.BanUser( username, reason, duration );
 		}
 
-		[AdminCmd( "stream_joinchannel" )]
+		[ClientCmd( "stream_joinchannel" )]
 		public static void StreamJoinChannelCommand( string channel )
 		{
-			Stream.JoinChannel( channel );
+			Streamer.JoinChannel( channel );
 		}
 
-		[AdminCmd( "stream_leavechannel" )]
+		[ClientCmd( "stream_leavechannel" )]
 		public static void StreamLeaveChannelCommand( string channel )
 		{
-			Stream.LeaveChannel( channel );
+			Streamer.LeaveChannel( channel );
 		}
 
-		[AdminCmd( "stream_resetplayers" )]
+		[ClientCmd( "stream_resetplayers" )]
 		public static void StreamResetPlayersCommand()
 		{
 			Current.ResetPlayers();
 		}
 
-		[AdminCmd( "stream_channel_game" )]
+		[ClientCmd( "stream_channel_game" )]
 		public static void StreamChannelGameCommand( string gameId )
 		{
-			Stream.Game = gameId;
+			Streamer.Game = gameId;
 		}
 
-		[AdminCmd( "stream_channel_language" )]
+		[ClientCmd( "stream_channel_language" )]
 		public static void StreamChannelLanguageCommand( string languageId )
 		{
-			Stream.Language = languageId;
+			Streamer.Language = languageId;
 		}
 
-		[AdminCmd( "stream_channel_title" )]
+		[ClientCmd( "stream_channel_title" )]
 		public static void StreamChannelTitleCommand( string title )
 		{
-			Stream.Title = title;
+			Streamer.Title = title;
 		}
 
-		[AdminCmd( "stream_channel_delay" )]
+		[ClientCmd( "stream_channel_delay" )]
 		public static void StreamChannelDelayCommand( int delay )
 		{
-			Stream.Delay = delay;
+			Streamer.Delay = delay;
 		}
 
-		[AdminCmd( "stream_followers" )]
+		[ClientCmd( "stream_followers" )]
 		public static async void StreamFollowersCommand()
 		{
 			Log.Info( "Followers" );
 
-			var user = await Stream.GetUser();
+			var user = await Streamer.GetUser();
 			var follows = await user.Followers;
 
 			foreach ( var follow in follows )
@@ -93,12 +93,12 @@ namespace TwitchLab
 			}
 		}
 
-		[AdminCmd( "stream_following" )]
+		[ClientCmd( "stream_following" )]
 		public static async void StreamFollowingCommand()
 		{
 			Log.Info( "Following" );
 
-			var user = await Stream.GetUser();
+			var user = await Streamer.GetUser();
 			var follows = await user.Following;
 
 			foreach ( var follow in follows )
@@ -110,12 +110,12 @@ namespace TwitchLab
 			}
 		}
 
-		[AdminCmd( "stream_game" )]
+		[ClientCmd( "stream_game" )]
 		public static async void StreamGameCommand( string gameName )
 		{
 			Log.Info( $"Game: {gameName}" );
 
-			var game = await Stream.GetGame( gameName );
+			var game = await Streamer.GetGame( gameName );
 
 			Log.Info( $"BoxArtUrl: {game.BoxArtUrl}" );
 			Log.Info( $"Id: {game.Id}" );
