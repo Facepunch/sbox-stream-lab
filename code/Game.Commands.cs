@@ -34,18 +34,6 @@ namespace TwitchLab
 			Streamer.BanUser( username, reason, duration );
 		}
 
-		[ClientCmd( "stream_joinchannel" )]
-		public static void StreamJoinChannelCommand( string channel )
-		{
-			Streamer.JoinChannel( channel );
-		}
-
-		[ClientCmd( "stream_leavechannel" )]
-		public static void StreamLeaveChannelCommand( string channel )
-		{
-			Streamer.LeaveChannel( channel );
-		}
-
 		[ClientCmd( "stream_resetplayers" )]
 		public static void StreamResetPlayersCommand()
 		{
@@ -107,28 +95,6 @@ namespace TwitchLab
 				Log.Info( $"Username: {follow.Username}" );
 				Log.Info( $"DisplayName: {follow.DisplayName}" );
 				Log.Info( $"FollowedAt: {follow.CreatedAt}" );
-			}
-		}
-
-		[ClientCmd( "stream_game" )]
-		public static async void StreamGameCommand( string gameName )
-		{
-			Log.Info( $"Game: {gameName}" );
-
-			var game = await Streamer.GetGame( gameName );
-
-			Log.Info( $"BoxArtUrl: {game.BoxArtUrl}" );
-			Log.Info( $"Id: {game.Id}" );
-			Log.Info( $"Name: {game.Name}" );
-
-			var broadcasts = await game.Broadcasts;
-
-			foreach ( var broadcast in broadcasts )
-			{
-				Log.Info( $"DisplayName: {broadcast.DisplayName}" );
-				Log.Info( $"ViewerCount: {broadcast.ViewerCount}" );
-				Log.Info( $"ThumbnailUrl: {broadcast.ThumbnailUrl}" );
-				Log.Info( $"Title: {broadcast.Title}" );
 			}
 		}
 	}
