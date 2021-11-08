@@ -5,9 +5,9 @@ using System.Linq;
 
 namespace TwitchLab
 {
-	public partial class Game : GameBase
+	public partial class Game : Sandbox.Game
 	{
-		public static Game Current { get; private set; }
+		public static new Game Current { get; private set; }
 		public static Client LocalClient { get; private set; }
 		public Hud Hud { get; private set; }
 
@@ -16,7 +16,6 @@ namespace TwitchLab
 		public Game()
 		{
 			Current = this;
-			Transmit = TransmitType.Always;
 
 			if ( IsClient )
 			{
@@ -99,22 +98,6 @@ namespace TwitchLab
 			return camSetup;
 		}
 
-		public static void MoveToSpawnpoint( Entity pawn )
-		{
-			var spawnpoint = All.OfType<SpawnPoint>()
-				.OrderBy( x => Guid.NewGuid() )
-				.FirstOrDefault();
-
-			if ( spawnpoint == null )
-			{
-				Log.Warning( $"Couldn't find spawnpoint for {pawn}!" );
-				return;
-			}
-
-			pawn.ResetInterpolation();
-			pawn.Transform = spawnpoint.Transform;
-		}
-
 		public void ResetPlayers()
 		{
 			foreach ( var player in Players.Values )
@@ -127,27 +110,6 @@ namespace TwitchLab
 		void OnChatMessage( string name, string message, string color )
 		{
 			Hud.AddChatEntry( name, message, color );
-		}
-
-		public override void PostLevelLoaded()
-		{
-		}
-
-		public override void ClientDisconnect( Client cl, NetworkDisconnectionReason reason )
-		{
-		}
-
-		public override bool CanHearPlayerVoice( Client source, Client dest )
-		{
-			return false;
-		}
-
-		public override void PostCameraSetup( ref CameraSetup camSetup )
-		{
-		}
-
-		public override void OnVoicePlayed( ulong steamId, float level )
-		{
 		}
 	}
 }
